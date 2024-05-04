@@ -78,12 +78,9 @@ setNavWidth((prev) => !prev)
                 >
                   <Image src={sun} height={"10"} width={"10"} mr={"2"} />
                   <Text mt={2} fontSize="20px" fontWeight={500}>
-                    Dukha Bhanjan
+                    Do Eat
                   </Text>
-                  <Button variant={"outline"} onClick={handleHideNav} rounded={"full"}>
-
-                  <MdArrowForwardIos  />
-                  </Button>
+                 
                 </Box>
               </Link>
             </ListItem>
@@ -107,7 +104,7 @@ setNavWidth((prev) => !prev)
                                 flex="1"
                                 textAlign="left"
                               >
-                                Products
+                                Product
                               </Box>
                             </Box>
                           </Box>
@@ -117,7 +114,7 @@ setNavWidth((prev) => !prev)
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4} cursor={"pointer"} marginLeft={10}>
-                        <Box display={"flex"}>
+                        {/* <Box display={"flex"}>
                           <BsArrowRightShort
                             size={20}
                             style={{ marginTop: "5px" }}
@@ -130,7 +127,7 @@ setNavWidth((prev) => !prev)
                           >
                             Gemstone({totalgamestone})
                           </Text>
-                        </Box>
+                        </Box> */}
 
                         <Box display={"flex"}>
                           <BsArrowRightShort
@@ -143,11 +140,11 @@ setNavWidth((prev) => !prev)
                             fontSize={18}
                             onClick={() => navigate("/yantra")}
                           >
-                            Yantra({totalYantra})
+                            Dishes({totalYantra})
                           </Text>
                         </Box>
 
-                        <Box display={"flex"}>
+                        {/* <Box display={"flex"}>
                           <BsArrowRightShort
                             size={20}
                             style={{ marginTop: "5px" }}
@@ -160,8 +157,8 @@ setNavWidth((prev) => !prev)
                           >
                             WorkShip({totalWorkShip})
                           </Text>
-                        </Box>
-                        <Box display={"flex"}>
+                        </Box> */}
+                        {/* <Box display={"flex"}>
                           <BsArrowRightShort
                             size={20}
                             style={{ marginTop: "5px" }}
@@ -174,7 +171,7 @@ setNavWidth((prev) => !prev)
                           >
                             Aryuvedic({totalAryuvedic})
                           </Text>
-                        </Box>
+                        </Box> */}
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>

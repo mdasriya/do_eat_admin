@@ -10,12 +10,12 @@ export const SidebarData = [
     icon: <AiIcons.AiFillHome />,
     cName: "nav-text",
   },
-  {
-    title: "Kundali Data",
-    path: "/kundalidata",
-    icon: <IoIcons.IoIosPaper />,
-    cName: "nav-text",
-  },
+  // {
+  //   title: "Kundali Data",
+  //   path: "/kundalidata",
+  //   icon: <IoIcons.IoIosPaper />,
+  //   cName: "nav-text",
+  // },
   {
     title: "Products",
     path: "/products",
@@ -23,12 +23,12 @@ export const SidebarData = [
     cName: "nav-text",
   },
   
-  {
-    title: "Contact Data",
-    path: "/contactdata",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
+  // {
+  //   title: "Contact Data",
+  //   path: "/contactdata",
+  //   icon: <IoIcons.IoMdPeople />,
+  //   cName: "nav-text",
+  // },
   {
     title: "Ordered Data",
     path: "/orders",

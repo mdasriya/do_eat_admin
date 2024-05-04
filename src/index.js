@@ -44,30 +44,30 @@ const router = createBrowserRouter([
         path: "/",
         element: <PrivateRoutes><Home /></PrivateRoutes> ,
       },
-      {
-        path: "products",
-        element: <PrivateRoutes><Products /></PrivateRoutes>,
-      },
+      // {
+      //   path: "products",
+      //   element: <PrivateRoutes><Products /></PrivateRoutes>,
+      // },
       {
         path: "yantra",
         element: <PrivateRoutes><Yantra /></PrivateRoutes>,
       },
-      {
-        path: "workShip",
-        element: <PrivateRoutes><WorkShip /></PrivateRoutes>,
-      },
-      {
-        path: "aryuvedic",
-        element: <PrivateRoutes><Aryuvedic /></PrivateRoutes>,
-      },
-      {
-        path: "kundalidata",
-        element: <PrivateRoutes><Kundali /></PrivateRoutes>,
-      },
-      {
-        path: "contactdata",
-        element: <PrivateRoutes><ContactData /></PrivateRoutes>,
-      },
+      // {
+      //   path: "workShip",
+      //   element: <PrivateRoutes><WorkShip /></PrivateRoutes>,
+      // },
+      // {
+      //   path: "aryuvedic",
+      //   element: <PrivateRoutes><Aryuvedic /></PrivateRoutes>,
+      // },
+      // {
+      //   path: "kundalidata",
+      //   element: <PrivateRoutes><Kundali /></PrivateRoutes>,
+      // },
+      // {
+      //   path: "contactdata",
+      //   element: <PrivateRoutes><ContactData /></PrivateRoutes>,
+      // },
       {
         path: "orders",
         element: <PrivateRoutes><Orders /></PrivateRoutes>,

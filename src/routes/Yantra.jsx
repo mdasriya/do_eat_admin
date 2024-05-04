@@ -26,6 +26,7 @@ import {
   Text,
   useColorMode,
   Spinner,
+  Select,
 } from "@chakra-ui/react";
 // import data from "../Data";
 import { UploadButton } from "@bytescale/upload-widget-react";
@@ -65,7 +66,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     setInLoading(true)
     try {
       const response = await axios.get(
-        "https://outrageous-shoulder-pads-fly.cyclic.app/yantra"
+        "http://localhost:4000/yantra"
       );
       setInLoading(false)
       setProducts(response.data);
@@ -91,6 +92,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
       image: '',
       quantity: 0,
       price:"",
+      veg:""
     });
   };
  
@@ -103,7 +105,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     try {
       if (editingProduct && editingProduct._id) {
         const res = await axios.put(
-          `https://outrageous-shoulder-pads-fly.cyclic.app/yantr/${editingProduct._id}`,
+          `http://localhost:4000/yantr/${editingProduct._id}`,
           editingProduct
           );
         fetchData();
@@ -123,7 +125,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`https://outrageous-shoulder-pads-fly.cyclic.app/yantra/delete/${id}`);
+      const res = await axios.delete(`http://localhost:4000/yantra/delete/${id}`);
 
       if (res.data.state) {
         renderComp();
@@ -153,7 +155,9 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     image: '',
     quantity: "",
     price:"",
+    veg:""
   });
+ 
 
 
 
@@ -162,7 +166,10 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 
   const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
     setFormData((prevData) => ({ ...prevData, [name]: parsedValue }));
-
+  };
+  const handleChangeveg = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, veg: value });
   };
 
   const handleChangePrice = (event) => {
@@ -175,7 +182,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 const handleSubmit = async () => {
   try {
   
-     const res = await axios.post("https://outrageous-shoulder-pads-fly.cyclic.app/yantra/create", formData);
+     const res = await axios.post("http://localhost:4000/yantra/create", formData);
 
      if (res.data.state) {
       toast({
@@ -192,6 +199,7 @@ const handleSubmit = async () => {
         description: '',
         image: '',
         quantity: 0,
+        veg:""
       });
 
        renderComp();
@@ -214,7 +222,7 @@ const handleSubmit = async () => {
 
 
 
-
+console.log("forrmm",formData)
 
 useEffect(() => {
   fetchData();
@@ -224,7 +232,7 @@ useEffect(() => {
   return (
     <Box>
       <chakra.h1 textAlign="center" fontSize="2xl" fontWeight="bold" mb={4}>
-        Yantra Products
+        Dishes Products
       </chakra.h1>
     
       <Box>
@@ -246,7 +254,7 @@ useEffect(() => {
             colorScheme={"green"}
             onClick={handleAddGemstoneClick}
           >
-            Add Yantra
+            Add Dishes
           </Button>
         </Center>
       </Box>
@@ -255,7 +263,7 @@ useEffect(() => {
       <Modal size={"xl"} isOpen={isAddModalOpen} onClose={handleCloseAddModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Yantra</ModalHeader>
+          <ModalHeader>Add Product</ModalHeader>
           <ModalCloseButton />
          <ModalBody>
          <Box>
@@ -296,12 +304,18 @@ useEffect(() => {
 <FormControl mt={4}>
             <FormLabel>Quantity</FormLabel>
             <Input type="number" name="quantity" onChange={handleChange} value={formData.quantity} placeholder="product quantity"/>
+         
+          </FormControl>
+<FormControl mt={4}>
+            <FormLabel>Sort filter</FormLabel>
+            <Input type="text" name="quantity" onChange={handleChange} value={formData.quantity} placeholder="product quantity"/>
+         
           </FormControl>
           {/* Submit Button */}
         {addLoading ? <Button isLoading mt={4} ml={2}  spinner={<BeatLoader size={8} color='white' />} colorScheme="yellow"  onClick={handleSubmit}>
-           ADD Yantra
+           ADD Dishes
            </Button> :   <Button mt={4} ml={2} colorScheme="yellow"  onClick={handleSubmit}>
-           ADD Yantra
+           ADD Dishes
            </Button>}
         </Box>
          </ModalBody>

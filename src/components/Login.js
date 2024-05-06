@@ -24,7 +24,7 @@ const Login = () => {
     // Perform authentication logic here
 console.log(email, password)
 
-    if (email === "admin@example.com" && password === "admin123") { 
+    if (email === "shendeomi98@gmail.com" && password === "Omii@123") { 
       localStorage.setItem("isAdminLoggedIn", "true");
       nav("/");
       // Show success toast

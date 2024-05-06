@@ -63,7 +63,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     setAddLoading(true)
     try {
       const response = await axios.get(
-        "https://outrageous-shoulder-pads-fly.cyclic.app/workShip"
+        "https://light-foal-loafers.cyclic.app/workShip"
       );
   setAddLoading(false)
       setProducts(response.data);
@@ -98,7 +98,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     try {
       if (editingProduct && editingProduct._id) {
         const res = await axios.put(
-          `https://outrageous-shoulder-pads-fly.cyclic.app/workShip/${editingProduct._id}`,
+          `https://light-foal-loafers.cyclic.app/workShip/${editingProduct._id}`,
           editingProduct
           );
         fetchData();
@@ -118,7 +118,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`https://outrageous-shoulder-pads-fly.cyclic.app/workShip/delete/${id}`);
+      const res = await axios.delete(`https://light-foal-loafers.cyclic.app/workShip/delete/${id}`);
 
       if (res.data.state) {
         renderComp();
@@ -175,7 +175,7 @@ const handleSubmit = async () => {
   console.log(formData)
   try {
   
-     const res = await axios.post("https://outrageous-shoulder-pads-fly.cyclic.app/workShip/create", formData);
+     const res = await axios.post("https://light-foal-loafers.cyclic.app/workShip/create", formData);
 
      if (res.data.state) {
       toast({

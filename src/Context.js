@@ -23,7 +23,7 @@ useEffect(()=> {
     try {
       // Fetch order data
       const ordersResponse = await axios.get(
-        "https://outrageous-shoulder-pads-fly.cyclic.app/order/all"
+        "https://light-foal-loafers.cyclic.app/order/all"
       );
 
       // Update total orders
@@ -40,7 +40,7 @@ useEffect(()=> {
 
       // Fetch user data
       const usersResponse = await axios.get(
-        "https://outrageous-shoulder-pads-fly.cyclic.app/yantra"
+        "https://light-foal-loafers.cyclic.app/yantra"
       );
 if(usersResponse.data){
  
@@ -59,7 +59,7 @@ const yantaFetch = async () => {
   
   try {
     const response = await axios.get(
-      "https://outrageous-shoulder-pads-fly.cyclic.app/products"
+      "https://light-foal-loafers.cyclic.app/products"
     );
 if(response.data){
    setTotalGemstone(response.data.length); 
@@ -72,7 +72,7 @@ const WorkShipFetch = async () => {
   
   try {
     const response = await axios.get(
-      "https://outrageous-shoulder-pads-fly.cyclic.app/workShip"
+      "https://light-foal-loafers.cyclic.app/workShip"
     );
 if(response.data){
 
@@ -86,7 +86,7 @@ const handleAryuvedic = async () => {
   
   try {
     const response = await axios.get(
-      "https://outrageous-shoulder-pads-fly.cyclic.app/medecine"
+      "https://light-foal-loafers.cyclic.app/medecine"
     );
 if(response.data){
 
@@ -107,13 +107,13 @@ if(response.data){
       try {
         // Fetch order data
         const ordersResponse = await axios.get(
-          "https://outrageous-shoulder-pads-fly.cyclic.app/order/all"
+          "https://light-foal-loafers.cyclic.app/order/all"
         );
-
+console.log("orderData",ordersResponse.data)
         // Update total orders
         setTotalOrders(ordersResponse.data.length);
 
-        // Calculate total revenue
+        // Calculate total revenue.
         const revenue = ordersResponse.data.reduce(
           (acc, data) => acc + data.price * data.quantity,
           0
@@ -124,7 +124,7 @@ if(response.data){
 
         // Fetch user data
         const usersResponse = await axios.get(
-          "https://outrageous-shoulder-pads-fly.cyclic.app/user"
+          "https://light-foal-loafers.cyclic.app/user"
         );
   if(usersResponse.data.users.length>0){
     setTotalUsers(usersResponse.data.users.length)

@@ -32,7 +32,7 @@ function Home() {
           top={"4rem"}
           fontWeight='extrabold'
         >
-          Dukha Bhanjan DashBoard
+          Do Eat Admin DashBoard
         </Text>
       </Center>
       <Grid

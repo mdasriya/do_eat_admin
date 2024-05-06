@@ -75,8 +75,9 @@ setNavWidth((prev) => !prev)
                   position={"relative"}
                   right={"2rem"}
                   alignItems={"center"}
+                  marginLeft={"50px"}
                 >
-                  <Image src={sun} height={"10"} width={"10"} mr={"2"} />
+                  <Image src="https://foodorder-pink.vercel.app/assets/Group%2047-VPe2s1rp.png" height={"10"} width={"10"} mr={"2"} />
                   <Text mt={2} fontSize="20px" fontWeight={500}>
                     Do Eat
                   </Text>

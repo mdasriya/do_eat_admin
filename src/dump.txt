@@ -13,7 +13,7 @@ export const RevenueProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const ordersResponse = await axios.get(
-          "https://outrageous-shoulder-pads-fly.cyclic.app/order/all"
+          "https://light-foal-loafers.cyclic.app/order/all"
         );
 
         // Update total orders

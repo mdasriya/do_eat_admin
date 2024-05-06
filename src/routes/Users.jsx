@@ -22,7 +22,7 @@ const Users = () => {
     setInitLoading(true);
     try {
       const response = await axios.get(
-        "https://outrageous-shoulder-pads-fly.cyclic.app/user"
+        "https://light-foal-loafers.cyclic.app/user"
       );
       console.log(response);
       if (response.data.users) setUsers((response.data.users).reverse());

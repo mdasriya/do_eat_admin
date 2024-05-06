@@ -64,7 +64,7 @@ import {
       setAddLoading(true)
       try {
         const response = await axios.get(
-          "https://outrageous-shoulder-pads-fly.cyclic.app/medecine"
+          "https://light-foal-loafers.cyclic.app/medecine"
           
         );
         setProducts(response.data);
@@ -104,7 +104,7 @@ import {
       try {
         if (editingProduct && editingProduct._id) {
           const res = await axios.put(
-            `https://outrageous-shoulder-pads-fly.cyclic.app/medecine/${editingProduct._id}`,
+            `https://light-foal-loafers.cyclic.app/medecine/${editingProduct._id}`,
             editingProduct
             );
           fetchData();
@@ -124,7 +124,7 @@ import {
   
     const handleDelete = async (id) => {
       try {
-        const res = await axios.delete(`https://outrageous-shoulder-pads-fly.cyclic.app/medecine/delete/${id}`);
+        const res = await axios.delete(`https://light-foal-loafers.cyclic.app/medecine/delete/${id}`);
   
         if (res.data.state) {
           renderComp();
@@ -180,7 +180,7 @@ import {
   console.log("ayu",product)
     try {
     
-       const res = await axios.post("https://outrageous-shoulder-pads-fly.cyclic.app/medecine/create", formData);
+       const res = await axios.post("https://light-foal-loafers.cyclic.app/medecine/create", formData);
   
        if (res.data.state) {
         toast({

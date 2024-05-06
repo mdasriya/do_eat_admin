@@ -66,7 +66,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     setInLoading(true)
     try {
       const response = await axios.get(
-        "http://localhost:4000/yantra"
+        "https://light-foal-loafers.cyclic.app/yantra"
       );
       setInLoading(false)
       setProducts(response.data);
@@ -92,7 +92,8 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
       image: '',
       quantity: 0,
       price:"",
-      veg:""
+      veg:"",
+      category:""
     });
   };
  
@@ -155,7 +156,8 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     image: '',
     quantity: "",
     price:"",
-    veg:""
+    veg:"",
+    category:""
   });
  
 
@@ -163,14 +165,11 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+  // const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-  const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
-    setFormData((prevData) => ({ ...prevData, [name]: parsedValue }));
-  };
-  const handleChangeveg = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, veg: value });
-  };
+  
 
   const handleChangePrice = (event) => {
     const { name, value } = event.target;
@@ -222,7 +221,7 @@ const handleSubmit = async () => {
 
 
 
-console.log("forrmm",formData)
+// console.log("forrmm",formData)
 
 useEffect(() => {
   fetchData();
@@ -306,10 +305,32 @@ useEffect(() => {
             <Input type="number" name="quantity" onChange={handleChange} value={formData.quantity} placeholder="product quantity"/>
          
           </FormControl>
+  
+          <FormControl mt={4}>
+          
+          
+            <FormLabel>Category</FormLabel>
+            <Select name="category" onChange={handleChange} placeholder='Select option'>
+  <option value='Chinese'>Chinese</option>
+  <option value='biryani'>biryani</option>
+  <option value='pizza'>pizza</option>
+  <option value='burger'>burger</option>
+  <option value='combos'>combos</option>
+  <option value='breakfast'>breakfast</option>
+ 
+  
+</Select>
+          </FormControl>
+
+
 <FormControl mt={4}>
             <FormLabel>Sort filter</FormLabel>
-            <Input type="text" name="quantity" onChange={handleChange} value={formData.quantity} placeholder="product quantity"/>
-         
+            <Select name="veg" onChange={handleChange} placeholder='Select option'>
+  <option value='veg'>Veg</option>
+  <option value='nonveg'>Nonveg</option>
+  
+  
+</Select>
           </FormControl>
           {/* Submit Button */}
         {addLoading ? <Button isLoading mt={4} ml={2}  spinner={<BeatLoader size={8} color='white' />} colorScheme="yellow"  onClick={handleSubmit}>

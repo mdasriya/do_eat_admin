@@ -1,71 +1,253 @@
-# Getting Started with Create React App
+<!-- import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Heading,
+  Center,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Icon,
+  Badge,
+  Button,
+  useToast,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { useRevenue } from "../Context";
+import { Spinner } from "@chakra-ui/react";
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+const Orders = () => {
+  const toast = useToast()
+  const [odata, setOdata] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [add, setAdd] = useState([]);
+  const { updateTotalRevenue, updateTotalOrders } = useRevenue();
+  const [loading, setLoading] = useState(true);
+  const [render, setRender] = useState(false)
+  const [loadingStatus, setLoadingStatus] = useState(false)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
+const renderComp = () => {
+  setRender((prev)=> !prev)
+}
 
-## Available Scripts
+// 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://light-foal-loafers.cyclic.app/order/all"
+      );
+      setOdata(response.data.reverse());
+      console.log("res",response.data)
+      setLoading(false);
+      updateTotalOrders(response.data.length);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-In the project directory, you can run:
+  const handleSearch = (event) => {
+    setSearchInput(event.target.value);
+  };
 
-### `npm start`
+  const fetchAdd = async () => {
+    try {
+      const response = await axios.get(
+        "https://light-foal-loafers.cyclic.app/address"
+      );
+      setAdd(response.data);
+    } catch (error) {
+      console.error("Error fetching address data:", error);
+    }
+  };
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  useEffect(() => {
+    const revenue = odata.reduce((acc, data) => {
+      return acc + data.price * data.quantity;
+    }, 0);
 
-### `npm test`
+    updateTotalRevenue(revenue);
+  }, [odata, updateTotalRevenue]);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  // const filteredData = odata.filter((data) => {
+  //   return (
+  //     data.user.toLowerCase().includes(searchInput.toLowerCase()) ||
+  //     data.title.includes(searchInput)
+  //   );
+  // });
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  const handleEditOrderStatus = async(id, status) => {
+    setLoadingStatus(true)
+    if(status=== "dispatch"){
+      const response =  await axios.patch(`https://light-foal-loafers.cyclic.app/order/update/${id}`, {status:"dispatch"})
+      try {
+        if(response.data.state){
+          toast({
+            title: response.data.msg,
+            status: 'success',
+            position:'top-right',
+            duration: 3000,
+            isClosable: true,
+          })
+          setLoadingStatus(false)
+          renderComp()
+         } 
+      } catch (error) {
+        toast({
+          title: "something went wrong while order",
+          status: 'error',
+          position:'top-right',
+          duration: 3000,
+          isClosable: true,
+        })
+        setLoadingStatus(false)
+        console.log(error.message)
+      }
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+    }else{
+      try {
+        const response =  await axios.patch(`https://light-foal-loafers.cyclic.app/order/update/${id}`, {status:"delivered"})
+        if(response.data.state){
+          toast({
+            title: response.data.msg,
+            status: 'success',
+            position:'top-right',
+            duration: 3000,
+            isClosable: true,
+          })
+          setLoadingStatus(false)
+          renderComp()
+         }
+      } catch (error) {
+        toast({
+          title: "something went wrong while order",
+          status: 'success',
+          position:'top-right',
+          duration: 3000,
+          isClosable: true,
+        })
+        console.log(error.message)
+          setLoadingStatus(false)
+      }
+    
+    }
+   
+  }
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  useEffect(() => {
+    fetchData();
+    fetchAdd();
+  }, [render]);
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+console.log("odata", odata)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  return (
+    <>
+    <Box p={4} textAlign="center">
+      <Heading mb={4}>Ordered Data</Heading>
+      <Center>
+        <InputGroup mb={4} width={"50%"}>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={SearchIcon} color="gray.300" />
+          </InputLeftElement>
+          <Input
+            placeholder="Search contact..."
+            type="text"
+            value={searchInput}
+            onChange={handleSearch}
+          />
+        </InputGroup>
+      </Center>
+      {loading ? (
+        <Center>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="orange.200"
+            size="xl"
+            position={"relative"}
+            top={"10rem"}
+          />
+        </Center>
+      ) : (
+        <Table maxWidth={"500px"} variant="striped" colorScheme="orange" overflowX={"hidden"}    >
+          <Thead>
+            <Tr>
+              
+              <Th>Name</Th>
+              <Th>OrderId</Th>
+              <Th>Email</Th>
+              <Th>Phone No.</Th>
+              <Th>Order Date</Th>
+            
+              <Th>citys</Th>
+              <Th>Country</Th>
+              <Th>Order Status</Th>
+              {/* <Th>Total Amount</Th> */}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {odata.map((data, index) => {
+              
+              // const postData = add.find((code) => code.UserId === data.UserId);
+              const orderData = data.data
+               console.log("data.data",orderData)
+              return (
+                <Tr key={index}>
+                
+                <Td>{data.firstName} {data.lastName}</Td>
+                <Td>{data.email}</Td>
+                <Td>{data.phone}</Td>
+                <Td>#{data._id}</Td>
 
-## Learn More
+                <Td>{data.orderDateTime.slice(0,10)}</Td>
+                  <Td>{data.city}</Td>
+                  <Td>{data.country}</Td>
+                  
+                 
+                 
+                  {/* <Td>
+                    {addressData
+                      ? `${addressData.address1},${addressData.address2},${addressData.city || " "},Mob.${addressData.phone}`
+                      : "N/A"}
+                  </Td> */}
+                 
+                  <Td>  <Box gap={2} display={"flex"} flexDirection={"column"}>
+              <Box >
+              {data.cancel === "process" ? <Badge  cursor={"pointer"} colorScheme={data.status === "delivered"?"teal":"purple"} >{data.status}</Badge>:<Badge  cursor={"pointer"} colorScheme='red'>{data.cancel}</Badge> }     
+             {data.status === "delivered" && <Button mt={1} cursor={"pointer"} colorScheme='red' size='xs'>Order Closed</Button>}  
+              
+              </Box>
+             
+               <Button size='xs' isDisabled={data.status === "delivered" || data.status === "dispatch" ||data.cancel==="canceled"} cursor={"pointer"} colorScheme='blue' onClick={()=>handleEditOrderStatus(data._id, "dispatch")}>dispatch</Button>
+                    <Button size='xs' isDisabled={data.status === "delivered" || data.cancel==="canceled"} cursor={"pointer"} colorScheme='green' onClick={()=>handleEditOrderStatus(data._id, "delivered")}>delivered</Button>
+                    </Box></Td>
+                  {/* <Td>{` ₹${data.price * data.quantity}`}</Td> */}
+                 
+                </Tr>
+              
+              );
+            })}
+          </Tbody>
+        </Table>
+      )}
+    </Box>
+    
+                      </>
+  );
+};
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# react-sidebar-router-v6.4
+export default Orders; -->

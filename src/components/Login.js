@@ -18,12 +18,15 @@ import { useNavigate } from "react-router";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
   const nav = useNavigate();
   const toast = useToast();
+
+
   const handleLogin = () => {
     // Perform authentication logic here
 console.log(email, password)
-
     if (email === "shendeomi98@gmail.com" && password === "Omii@123") { 
       localStorage.setItem("isAdminLoggedIn", "true");
       nav("/");
@@ -38,6 +41,9 @@ console.log(email, password)
       alert("Invalid credentials. Please try again.");
     }
   };
+
+
+
 
   return (
     <Stack minH="100vh" direction={{ base: "column-reverse", md: "row" }}>

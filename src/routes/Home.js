@@ -11,6 +11,7 @@ import {
   Grid,
   Text,
   Badge,
+  Button,
 } from "@chakra-ui/react";
 import { BsCart4 } from "react-icons/bs";
 import { useRevenue } from "../Context";
@@ -18,6 +19,7 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 function Home() {
   const { totalRevenue, totalOrders,totalWorkShip, totalUsers,totalYantra,totalgamestone,totalAryuvedic } = useRevenue();
+const resturant = false
 
 
   let allOders = totalgamestone + totalYantra + totalWorkShip + totalAryuvedic;
@@ -34,6 +36,7 @@ function Home() {
         >
           Do Eat Admin DashBoard
         </Text>
+    {resturant ?  <Button colorScheme="red" ml={"500px"}> Resturant Open </Button> :  <Button colorScheme="red" ml={"500px"}> Resturant Close </Button>}   
       </Center>
       <Grid
         templateColumns="repeat(2, 1fr)"

@@ -207,6 +207,7 @@ const handleRefreshPage = () => {
                       Full Name: {item.firstName} {item.lastName}
                     </Text>
                     <Text>Email: {item.email}</Text>
+                    <Text>Mobile No: {item.phone}</Text>
                     <Text>City: {item.city}</Text>
                     <Text>State: {item.state}</Text>
                     <Text>Country: {item.country}</Text>
@@ -226,7 +227,7 @@ const handleRefreshPage = () => {
                           <Th>title</Th>
                           <Th>Price</Th>
                           <Th>quantity</Th>
-                          <Th>User</Th>
+                          {/* <Th>User</Th> */}
                         </Tr>
                       </Thead>
                       <Tbody>
@@ -243,13 +244,14 @@ const handleRefreshPage = () => {
                             {/* <Td>{order._id}</Td> */}
                             <Td>{order.title}</Td>
                             <Td>{order.price}</Td>
-                            <Td>{order.quantity}</Td>
-                            <Td>{order.user}</Td>
+                            <Td>{order.quantity}</Td> 
                           </Tr>
+                          
                         ))}
                       </Tbody>
                     </Table>
                   </Box>
+                 
                 </Box>
               </Box>
             ))}

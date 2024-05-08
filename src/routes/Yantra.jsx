@@ -197,6 +197,8 @@ const Yantra = () => {
     price: "",
     veg: "",
     category: "",
+    discount:"",
+    cutprice:""
   });
 
 
@@ -218,6 +220,19 @@ const Yantra = () => {
 
     const parsedValue1 = name === "price" ? parseInt(value, 10) : value;
     setFormData((prevData) => ({ ...prevData, [name]: parsedValue1 }));
+  };
+  const handleChangecutPrice = (event) => {
+    const { name, value } = event.target;
+
+    const parsedValue1 = name === "cutprice" ? parseInt(value, 10) : value;
+    setFormData((prevData) => ({ ...prevData, [name]: parsedValue1 }));
+  };
+
+  const handleChangeDiscount = (event) => {
+    const { name, value } = event.target;
+
+    const parsedValue2 = name === "discount" ? parseInt(value, 10) : value;
+    setFormData((prevData) => ({ ...prevData, [name]: parsedValue2 }));
   };
 
   const handleSubmit = async () => {
@@ -243,6 +258,8 @@ const Yantra = () => {
           image: "",
           quantity: 0,
           veg: "",
+          discount:"",
+          cutprice:""
         });
 
         renderComp();
@@ -476,6 +493,16 @@ const Yantra = () => {
                   placeholder="Enter price"
                 />
               </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Cut Price</FormLabel>
+                <Input
+                  type="number"
+                  name="cutprice"
+                  onChange={handleChangecutPrice}
+                  value={formData.cutprice}
+                  placeholder="Enter cut price"
+                />
+              </FormControl>
 
               <FormControl mt={4}>
                 <FormLabel>Description</FormLabel>
@@ -494,6 +521,17 @@ const Yantra = () => {
                   onChange={handleChange}
                   value={formData.quantity}
                   placeholder="product quantity"
+                />
+              </FormControl>
+           
+              <FormControl mt={4}>
+                <FormLabel>Discount</FormLabel>
+                <Input
+                  type="number"
+                  name="discount"
+                  onChange={handleChangeDiscount}
+                  value={formData.discount}
+                  placeholder="product discount"
                 />
               </FormControl>
 
@@ -625,10 +663,16 @@ const Yantra = () => {
                   Name : {gemstone.title}
                 </chakra.h1>
                 <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
-                  Price : {gemstone.price}
+                 cut Price : {gemstone.price}
+                </chakra.h1>
+                <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
+                  Price : {gemstone.cutprice}
                 </chakra.h1>
                 <Text color={"black"}>
                   Description : {gemstone.description}
+                </Text>
+                <Text color={"black"}>
+                  Discount : {gemstone.discount}%
                 </Text>
 
                 <Divider />

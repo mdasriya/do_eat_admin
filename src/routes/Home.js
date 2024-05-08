@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Stat,
   StatNumber,
@@ -17,10 +17,52 @@ import { BsCart4 } from "react-icons/bs";
 import { useRevenue } from "../Context";
 import { IoBagCheckOutline } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
+import axios from "axios";
 function Home() {
+  const [status, setStatus] = useState("")
+  const [update, setUpdate] = useState("")
+  const [id, setId] = useState("")
   const { totalRevenue, totalOrders,totalWorkShip, totalUsers,totalYantra,totalgamestone,totalAryuvedic } = useRevenue();
-const resturant = false
+// const resturant = false
+ 
+ const render = () =>{
+  setUpdate(prev => !prev)
+ }
 
+
+
+const handleResStatus = (props) => {
+console.log(props)
+  axios.patch(`https://light-foal-loafers.cyclic.app/resturant/update/${id}`, {resturant:props} )
+  .then((res)=> {
+    // console.log(res.data)
+    render()
+  }).catch((error)=> {
+    console.log(error.message)
+  })
+
+
+}
+
+const fetch = () => {
+  axios.get("https://light-foal-loafers.cyclic.app/resturant")
+  .then((res)=> {
+  // console.log(res.data)
+  setStatus(res.data[0].resturant)
+  setId(res.data[0]._id)
+  
+  }).catch((error)=> {
+    console.log(error.message)
+  })
+}
+
+
+useEffect(()=>{
+  fetch()
+},[update])
+
+// console.log("status", status)
+// console.log("id", id)
 
   let allOders = totalgamestone + totalYantra + totalWorkShip + totalAryuvedic;
   return (
@@ -36,7 +78,7 @@ const resturant = false
         >
           Do Eat Admin DashBoard
         </Text>
-    {resturant ?  <Button colorScheme="red" ml={"500px"}> Resturant Open </Button> :  <Button colorScheme="red" ml={"500px"}> Resturant Close </Button>}   
+    {status ?  <Button colorScheme="green" ml={"500px"} onClick={()=>handleResStatus(false)}> Resturant Open </Button> :   <Button colorScheme="red" ml={"500px"} onClick={()=>handleResStatus(true)}> Resturant Close </Button>}   
       </Center>
       <Grid
         templateColumns="repeat(2, 1fr)"

@@ -63,7 +63,7 @@ const Yantra = () => {
 
   const textColor = localStorage.getItem("chakra-ui-color-mode");
   const options = {
-    apiKey: "public_kW15bwHB6bQ5Wv42R9fgNg5vPtjH",
+    apiKey: "public_W142ibG53EuiVnmepYM6iYmqTRg5",
     maxFileCount: 1,
     showFinishButton: true,
   };

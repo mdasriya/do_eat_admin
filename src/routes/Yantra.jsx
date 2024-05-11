@@ -53,7 +53,8 @@ const Yantra = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(product);
   const [menuItem, setMenuItem] = useState([])
-  
+  const [dishImage, setDishImage] = useState("")
+  const [menuImageset, setMenuImage] = useState("")
   const [formData1, setFormData1] = useState({
     title: "",
     image: "",
@@ -80,6 +81,7 @@ const Yantra = () => {
       );
       setInLoading(false);
       setProducts(response.data);
+      console.log("ordersss",response.data)
     } catch (error) {
       console.error("Error fetching data:", error);
       setInLoading(false);
@@ -105,12 +107,14 @@ const Yantra = () => {
       veg: "",
       category: "",
     });
+    setDishImage("")
+    setMenuImage("")
   };
 
-  // const handleEditClick = (product) => {
-  //   setEditingProduct(product);
-  //   setIsModalOpen(true);
-  // };
+  const handleEditClick = (product) => {
+    setEditingProduct(product);
+    setIsModalOpen(true);
+  };
   const handleSaveEdit = async () => {
     console.log(editingProduct);
     try {
@@ -236,6 +240,7 @@ const Yantra = () => {
   };
 
   const handleSubmit = async () => {
+    setAddLoading(true)
     try {
       const res = await axios.post(
         "https://light-foal-loafers.cyclic.app/yantra/create",
@@ -261,7 +266,7 @@ const Yantra = () => {
           discount:"",
           cutprice:""
         });
-
+setDishImage("")
         renderComp();
         setAddLoading(false);
         setIsAddModalOpen(false);
@@ -388,7 +393,7 @@ const Yantra = () => {
                   </h2>
                   <AccordionPanel pb={4}>
                     {/* add model content start */}
-
+{menuImageset && <Text bg={"green"} color={"white"} >{menuImageset}</Text>}
                     <Box display={"flex"} gap={2}>
                       <FormControl>
                         <FormLabel> Menu Title</FormLabel>
@@ -415,7 +420,7 @@ const Yantra = () => {
                         <UploadButton
                           options={options}
                           onComplete={(files) =>
-                            alert(files.map((x) => x.fileUrl).join("\n"))
+                            setMenuImage(files.map((x) => x.fileUrl).join("\n"))
                           }
                         >
                           {({ onClick }) => (
@@ -443,6 +448,15 @@ const Yantra = () => {
               <Center>
                 <Box>
                   <Heading m={2}>Add Dishes</Heading>
+                  {/* <Text border={"1px solid gray" } bg={"green"} color={"white"}>{dishImage}</Text> */}
+                 {dishImage &&  <Text
+  border={"1px solid gray"}
+  bg={"green"}
+  color={"white"}
+  // contentEditable={true}
+>
+  {dishImage}
+</Text>}
                 </Box>
               </Center>
 
@@ -469,19 +483,18 @@ const Yantra = () => {
                 </FormControl>
                 {/* image uplaod code goes here   */}
                 <Box className="container">
-                  <UploadButton
-                    options={options}
-                    onComplete={(files) =>
-                      alert(files.map((x) => x.fileUrl).join("\n"))
-                    }
-                  >
-                    {({ onClick }) => (
-                      <Button mt={7} colorScheme="green" onClick={onClick}>
-                        Image Upload..
-                      </Button>
-                    )}
-                  </UploadButton>
-                </Box>
+  <UploadButton
+    options={options}
+    onComplete={files => setDishImage(files.map(x => x.fileUrl).join("\n"))}>
+  
+    {({ onClick }) => (
+      <Button mt={7} colorScheme="green" onClick={onClick}>
+        Image Upload..
+      </Button>
+    )}
+  </UploadButton>
+</Box>
+
               </Box>
               <FormControl mt={4}>
                 <FormLabel>Price</FormLabel>
@@ -543,12 +556,7 @@ const Yantra = () => {
                   placeholder="Select option"
                 >
 {menuItem && menuItem.map((item)=> <option value={item.title}>{item.title}</option>)}
-                  
-                  {/* <option value="biryani">biryani</option>
-                  <option value="pizza">pizza</option>
-                  <option value="burger">burger</option>
-                  <option value="combos">combos</option>
-                  <option value="main Course">main Course</option> */}
+                
                 </Select>
               </FormControl>
 
@@ -644,12 +652,12 @@ const Yantra = () => {
                     />
                   </Box>
                   <HStack justifyContent="flex-end">
-                    {/* <Button
+                     <Button
                     colorScheme="green"
                     onClick={() => handleEditClick(gemstone)}
                   >
                     Edit
-                  </Button> */}
+                  </Button> 
                     <Button
                       colorScheme={textColor === "dark" ? "red" : "red"}
                       onClick={() => handleDelete(gemstone._id)}
@@ -764,7 +772,7 @@ const Yantra = () => {
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Gemstone</ModalHeader>
+          <ModalHeader>Edit Dish (in progress.. )</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box>

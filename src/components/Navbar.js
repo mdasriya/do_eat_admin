@@ -88,7 +88,7 @@ setNavWidth((prev) => !prev)
             {SidebarData.map((item, index) => (
               <>
                 {item.title === "Products" ? (
-                  <Accordion allowToggle>
+                  <Accordion key={index} allowToggle>
                     <AccordionItem>
                       <h2>
                         <AccordionButton>

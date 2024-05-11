@@ -52,15 +52,14 @@ const Yantra = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(product);
-  const [menuItem, setMenuItem] = useState([])
-  const [dishImage, setDishImage] = useState("")
-  const [menuImageset, setMenuImage] = useState("")
+  const [menuItem, setMenuItem] = useState([]);
+  const [dishImage, setDishImage] = useState("");
+  const [menuImageset, setMenuImage] = useState("");
+  const [editLoading, setEditLoading] = useState(false)
   const [formData1, setFormData1] = useState({
     title: "",
     image: "",
   });
- 
-
 
   const textColor = localStorage.getItem("chakra-ui-color-mode");
   const options = {
@@ -81,7 +80,7 @@ const Yantra = () => {
       );
       setInLoading(false);
       setProducts(response.data);
-      console.log("ordersss",response.data)
+      console.log("ordersss", response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
       setInLoading(false);
@@ -107,28 +106,53 @@ const Yantra = () => {
       veg: "",
       category: "",
     });
-    setDishImage("")
-    setMenuImage("")
+    setDishImage("");
+    setMenuImage("");
   };
 
   const handleEditClick = (product) => {
+    console.log(product)
     setEditingProduct(product);
     setIsModalOpen(true);
   };
-  const handleSaveEdit = async () => {
+
+  const handleEditSubmit =  () => {
     console.log(editingProduct);
-    try {
-      if (editingProduct && editingProduct._id) {
-        const res = await axios.put(
-          `https://light-foal-loafers.cyclic.app/yantr/${editingProduct._id}`,
-          editingProduct
-        );
-        fetchData();
-        handleCloseModal();
-      }
-    } catch (error) {
-      console.error("Error updating product:", error);
-    }
+setEditLoading(true)
+axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduct._id}`, editingProduct)
+.then((res)=> {
+  toast({
+    title: res.data.msg,
+    status: 'success',
+    duration: 3000,
+    isClosable: true,
+  })
+  setEditLoading(false)
+  fetchData();
+  handleCloseModal();
+}).catch((error)=> {
+  toast({
+    title: "unable to edit dish something wrong",
+    status: 'error',
+    duration: 3000,
+    isClosable: true,
+  })
+  console.log(error.message)
+  setEditLoading(false)
+})
+
+    // https://light-foal-loafers.cyclic.app/yantra/update/663e2898c0a951a8f1e9c829
+    // try {
+    //   if (editingProduct._id) {
+    //     const res = await axios.patch(`https://light-foal-loafers.cyclic.app/yantr/update/${editingProduct._id}`, editingProduct
+    //     );
+    //     console.log("edit res", res.data)
+    //     fetchData();
+    //     handleCloseModal();
+    //   }
+    // } catch (error) {
+    //   console.error("Error updating product:", error);
+    // }
   };
 
   useEffect(() => {
@@ -201,11 +225,9 @@ const Yantra = () => {
     price: "",
     veg: "",
     category: "",
-    discount:"",
-    cutprice:""
+    discount: "",
+    cutprice: "",
   });
-
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -213,11 +235,24 @@ const Yantra = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+     setEditingProduct((prev)=> {
+        return {...prev, [name]:value}
+      })
+  }
+  // const handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   // const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
+  //   setFormData((prevData) => ({ ...prevData, [name]: value }));
+  // };
+
   const handleChange1 = (event) => {
     const { name, value } = event.target;
     // const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
     setFormData1((prevData) => ({ ...prevData, [name]: value }));
   };
+
 
   const handleChangePrice = (event) => {
     const { name, value } = event.target;
@@ -231,6 +266,20 @@ const Yantra = () => {
     const parsedValue1 = name === "cutprice" ? parseInt(value, 10) : value;
     setFormData((prevData) => ({ ...prevData, [name]: parsedValue1 }));
   };
+  const handleChangePrice1 = (event) => {
+    const { name, value } = event.target;
+
+    const parsedValue1 = name === "price" ? parseInt(value, 10) : value;
+    setEditingProduct((prevData) => ({ ...prevData, [name]: parsedValue1 }));
+  };
+  const handleChangecutPrice1 = (event) => {
+    const { name, value } = event.target;
+
+    const parsedValue1 = name === "cutprice" ? parseInt(value, 10) : value;
+    setEditingProduct((prevData) => ({ ...prevData, [name]: parsedValue1 }));
+  };
+
+
 
   const handleChangeDiscount = (event) => {
     const { name, value } = event.target;
@@ -240,7 +289,7 @@ const Yantra = () => {
   };
 
   const handleSubmit = async () => {
-    setAddLoading(true)
+    setAddLoading(true);
     try {
       const res = await axios.post(
         "https://light-foal-loafers.cyclic.app/yantra/create",
@@ -263,10 +312,10 @@ const Yantra = () => {
           image: "",
           quantity: 0,
           veg: "",
-          discount:"",
-          cutprice:""
+          discount: "",
+          cutprice: "",
         });
-setDishImage("")
+        setDishImage("");
         renderComp();
         setAddLoading(false);
         setIsAddModalOpen(false);
@@ -286,51 +335,51 @@ setDishImage("")
   };
 
   const handleAddMenu = () => {
-  console.log("data1", formData1)
-  axios.post("https://light-foal-loafers.cyclic.app/menu/create", formData1)
-  .then((res)=>{
-    console.log(res.data)
-    toast({
-      title: res.data.msg,
-      status: "success",
-      duration: 4000,
-      position: "top-right",
-      isClosable: true,
+    console.log("data1", formData1);
+    axios
+      .post("https://light-foal-loafers.cyclic.app/menu/create", formData1)
+      .then((res) => {
+        console.log(res.data);
+        toast({
+          title: res.data.msg,
+          status: "success",
+          duration: 4000,
+          position: "top-right",
+          isClosable: true,
+        });
+        renderComp();
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast({
+          title: "unable to add menu",
+          status: "success",
+          duration: 4000,
+          position: "top-right",
+          isClosable: true,
+        });
+      });
+    setFormData1({
+      title: "",
+      image: "",
     });
-    renderComp()
-  }).catch((error)=> {
-    console.log(error.message)
-    toast({
-      title: "unable to add menu",
-      status: "success",
-      duration: 4000,
-      position: "top-right",
-      isClosable: true,
-    });
-  })
-  setFormData1({
-    title: "",
-    image: "",
-  })
-
   };
 
   const fetchMenu = () => {
-    axios.get("https://light-foal-loafers.cyclic.app/menu")
-    .then((res)=> {
-      console.log("menu", res.data)
-      setMenuItem(res.data)
-    })
-    .catch((error)=> {
-      console.log(error.message)
-    })
-  }
-
-
+    axios
+      .get("https://light-foal-loafers.cyclic.app/menu")
+      .then((res) => {
+        console.log("menu", res.data);
+        setMenuItem(res.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   useEffect(() => {
     fetchData();
-    fetchMenu()
+    fetchMenu();
   }, [render]);
 
   return (
@@ -393,7 +442,11 @@ setDishImage("")
                   </h2>
                   <AccordionPanel pb={4}>
                     {/* add model content start */}
-{menuImageset && <Text bg={"green"} color={"white"} >{menuImageset}</Text>}
+                    {menuImageset && (
+                      <Text bg={"green"} color={"white"}>
+                        {menuImageset}
+                      </Text>
+                    )}
                     <Box display={"flex"} gap={2}>
                       <FormControl>
                         <FormLabel> Menu Title</FormLabel>
@@ -435,11 +488,17 @@ setDishImage("")
                         </UploadButton>
                       </Box>
                     </Box>
-                  
-                    <Box>
-                        <Button colorScheme="red" width={"100%"} mt={2} onClick={handleAddMenu}>Submit</Button>
-                    </Box>
 
+                    <Box>
+                      <Button
+                        colorScheme="red"
+                        width={"100%"}
+                        mt={2}
+                        onClick={handleAddMenu}
+                      >
+                        Submit
+                      </Button>
+                    </Box>
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -449,14 +508,16 @@ setDishImage("")
                 <Box>
                   <Heading m={2}>Add Dishes</Heading>
                   {/* <Text border={"1px solid gray" } bg={"green"} color={"white"}>{dishImage}</Text> */}
-                 {dishImage &&  <Text
-  border={"1px solid gray"}
-  bg={"green"}
-  color={"white"}
-  // contentEditable={true}
->
-  {dishImage}
-</Text>}
+                  {dishImage && (
+                    <Text
+                      border={"1px solid gray"}
+                      bg={"green"}
+                      color={"white"}
+                      // contentEditable={true}
+                    >
+                      {dishImage}
+                    </Text>
+                  )}
                 </Box>
               </Center>
 
@@ -483,18 +544,19 @@ setDishImage("")
                 </FormControl>
                 {/* image uplaod code goes here   */}
                 <Box className="container">
-  <UploadButton
-    options={options}
-    onComplete={files => setDishImage(files.map(x => x.fileUrl).join("\n"))}>
-  
-    {({ onClick }) => (
-      <Button mt={7} colorScheme="green" onClick={onClick}>
-        Image Upload..
-      </Button>
-    )}
-  </UploadButton>
-</Box>
-
+                  <UploadButton
+                    options={options}
+                    onComplete={(files) =>
+                      setDishImage(files.map((x) => x.fileUrl).join("\n"))
+                    }
+                  >
+                    {({ onClick }) => (
+                      <Button mt={7} colorScheme="green" onClick={onClick}>
+                        Image Upload..
+                      </Button>
+                    )}
+                  </UploadButton>
+                </Box>
               </Box>
               <FormControl mt={4}>
                 <FormLabel>Price</FormLabel>
@@ -536,7 +598,7 @@ setDishImage("")
                   placeholder="product quantity"
                 />
               </FormControl>
-           
+
               <FormControl mt={4}>
                 <FormLabel>Discount</FormLabel>
                 <Input
@@ -555,8 +617,10 @@ setDishImage("")
                   onChange={handleChange}
                   placeholder="Select option"
                 >
-{menuItem && menuItem.map((item)=> <option value={item.title}>{item.title}</option>)}
-                
+                  {menuItem &&
+                    menuItem.map((item, index) => (
+                      <option key={index} value={item.title}>{item.title}</option>
+                    ))}
                 </Select>
               </FormControl>
 
@@ -619,171 +683,285 @@ setDishImage("")
           />
         </Center>
       ) : (
-       <Accordion allowToggle mt={5}>
-         <AccordionItem>
-    <h2>
-      <AccordionButton>
-        <Box as='span' flex='1' textAlign='left'>
-         Open Your Dishes Products
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4}></AccordionPanel>
-    <AccordionPanel pb={4}>
-       <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
-          {filteredData.map((gemstone, index) => (
-            <Container key={index} maxW="5xl" p={{ base: 5, md: 6 }}>
-              <Stack
-                boxShadow={"lg"}
-                bgColor="#f8f9fa"
-                maxW="100%"
-                spacing={2}
-                p={4}
-                rounded="md"
+        <Accordion allowToggle mt={5}>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex="1" textAlign="left">
+                  Open Your Dishes Products
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}></AccordionPanel>
+            <AccordionPanel pb={4}>
+              <Grid
+                templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
+                gap={4}
               >
-                <HStack justifyContent="space-between" alignItems="baseline">
-                  <Box pos="relative">
-                    <Avatar
-                      boxShadow="2px 0px 6px 2px #d2d2d2"
-                      src={gemstone.image}
-                      size="xl"
-                      borderRadius="md"
-                    />
-                  </Box>
-                  <HStack justifyContent="flex-end">
-                     <Button
-                    colorScheme="green"
-                    onClick={() => handleEditClick(gemstone)}
-                  >
-                    Edit
-                  </Button> 
-                    <Button
-                      colorScheme={textColor === "dark" ? "red" : "red"}
-                      onClick={() => handleDelete(gemstone._id)}
+                {filteredData.map((gemstone, index) => (
+                  <Container key={index} maxW="5xl" p={{ base: 5, md: 6 }}>
+                    <Stack
+                      boxShadow={"lg"}
+                      bgColor="#f8f9fa"
+                      maxW="100%"
+                      spacing={2}
+                      p={4}
+                      rounded="md"
                     >
-                      Delete
-                    </Button>
-                  </HStack>
-                </HStack>
+                      <HStack
+                        justifyContent="space-between"
+                        alignItems="baseline"
+                      >
+                        <Box pos="relative">
+                          <Avatar
+                            boxShadow="2px 0px 6px 2px #d2d2d2"
+                            src={gemstone.image}
+                            size="xl"
+                            borderRadius="md"
+                          />
+                        </Box>
+                        <HStack justifyContent="flex-end">
+                          <Button
+                            colorScheme="green"
+                            onClick={() => handleEditClick(gemstone)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            colorScheme={textColor === "dark" ? "red" : "red"}
+                            onClick={() => handleDelete(gemstone._id)}
+                          >
+                            Delete
+                          </Button>
+                        </HStack>
+                      </HStack>
 
-                <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
-                  Name : {gemstone.title}
-                </chakra.h1>
-                <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
-                 cut Price : {gemstone.price}
-                </chakra.h1>
-                <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
-                  Price : {gemstone.cutprice}
-                </chakra.h1>
-                <Text color={"black"}>
-                  Description : {gemstone.description}
-                </Text>
-                <Text color={"black"}>
-                  Discount : {gemstone.discount}%
-                </Text>
+                      <chakra.h1
+                        fontSize="xl"
+                        fontWeight="bold"
+                        color={"black"}
+                      >
+                        Name : {gemstone.title}
+                      </chakra.h1>
+                      <chakra.h1
+                        fontSize="xl"
+                        fontWeight="bold"
+                        color={"black"}
+                      >
+                        cut Price : {gemstone.price}
+                      </chakra.h1>
+                      <chakra.h1
+                        fontSize="xl"
+                        fontWeight="bold"
+                        color={"black"}
+                      >
+                        Price : {gemstone.cutprice}
+                      </chakra.h1>
+                      <Text color={"black"}>
+                        Description : {gemstone.description}
+                      </Text>
+                      <Text color={"black"}>
+                        Discount : {gemstone.discount}%
+                      </Text>
 
-                <Divider />
-              </Stack>
-            </Container>
-          ))}
-        </Grid>
-        </AccordionPanel>
-        </AccordionItem>
+                      <Divider />
+                    </Stack>
+
+
+
+
+
+
+
+                  </Container>
+                ))}
+              </Grid>
+            </AccordionPanel>
+          </AccordionItem>
         </Accordion>
       )}
 
-{/* menu accordians div start here */}
-<Accordion allowToggle mt={5}>
-         <AccordionItem>
-    <h2>
-      <AccordionButton>
-        <Box as='span' flex='1' textAlign='left'>
-         Open Your menu 
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4}></AccordionPanel>
-    <AccordionPanel pb={4}>
-       <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
-          {menuItem.map((menu, index) => (
-            <Container key={index} maxW="5xl" p={{ base: 5, md: 6 }}>
-              <Stack
-                boxShadow={"lg"}
-                bgColor="#f8f9fa"
-                maxW="100%"
-                spacing={2}
-                p={4}
-                rounded="md"
-              >
-                <HStack justifyContent="space-between" alignItems="baseline">
-                  <Box pos="relative">
-                    <Avatar
-                      boxShadow="2px 0px 6px 2px #d2d2d2"
-                      src={menu.image}
-                      size="xl"
-                      borderRadius="md"
-                    />
-                  </Box>
-                  <HStack justifyContent="flex-end">
-                    {/* <Button
+      {/* menu accordians div start here */}
+      <Accordion allowToggle mt={5}>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box as="span" flex="1" textAlign="left">
+                Open Your menu
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}></AccordionPanel>
+          <AccordionPanel pb={4}>
+            <Grid
+              templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
+              gap={4}
+            >
+              {menuItem.map((menu, index) => (
+                <Container key={index} maxW="5xl" p={{ base: 5, md: 6 }}>
+                  <Stack
+                    boxShadow={"lg"}
+                    bgColor="#f8f9fa"
+                    maxW="100%"
+                    spacing={2}
+                    p={4}
+                    rounded="md"
+                  >
+                    <HStack
+                      justifyContent="space-between"
+                      alignItems="baseline"
+                    >
+                      <Box pos="relative">
+                        <Avatar
+                          boxShadow="2px 0px 6px 2px #d2d2d2"
+                          src={menu.image}
+                          size="xl"
+                          borderRadius="md"
+                        />
+                      </Box>
+                      <HStack justifyContent="flex-end">
+                        {/* <Button
                     colorScheme="green"
                     onClick={() => handleEditClick(gemstone)}
                   >
                     Edit
                   </Button> */}
-                    <Button
-                      colorScheme={textColor === "dark" ? "red" : "red"}
-                      onClick={() => handleDeletemenu(menu._id)}
-                    >
-                      Delete
-                    </Button>
-                  </HStack>
-                </HStack>
+                        <Button
+                          colorScheme={textColor === "dark" ? "red" : "red"}
+                          onClick={() => handleDeletemenu(menu._id)}
+                        >
+                          Delete
+                        </Button>
+                      </HStack>
+                    </HStack>
 
-                <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
-                  Name : {menu.title}
-                </chakra.h1>
-               
+                    <chakra.h1 fontSize="xl" fontWeight="bold" color={"black"}>
+                      Name : {menu.title}
+                    </chakra.h1>
 
-                <Divider />
-              </Stack>
-            </Container>
-          ))}
-        </Grid>
-        </AccordionPanel>
+                    <Divider />
+                  </Stack>
+                </Container>
+              ))}
+            </Grid>
+          </AccordionPanel>
         </AccordionItem>
-        </Accordion>
-        {/* menu accordians div end here */}
+      </Accordion>
+      {/* menu accordians div end here */}
 
 
-
-
-
-
-
-
-
-
-
-
-
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+{/* update modal start from here */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} size={"xl"}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Dish (in progress.. )</ModalHeader>
+          <ModalHeader>Update Product</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box>
+  
+              {/* add model content start */}
+
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box as="span" flex="1" fontWeight={600} textAlign="left">
+                        update Menu
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    {/* add model content start */}
+                    {menuImageset && (
+                      <Text bg={"green"} color={"white"}>
+                        {menuImageset}
+                      </Text>
+                    )}
+                    <Box display={"flex"} gap={2}>
+                      <FormControl>
+                        <FormLabel> Menu Title</FormLabel>
+                        <Input
+                          type="text"
+                          name="title"
+                          onChange={handleChange1}
+                          value={formData1.title.toLowerCase()}
+                          placeholder="product name"
+                        />
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel>Menu Image</FormLabel>
+                        <Input
+                          type="text"
+                          name="image"
+                          onChange={handleChange1}
+                          value={formData1.image}
+                          placeholder="image address"
+                        />
+                      </FormControl>
+                      {/* image uplaod code goes here   */}
+                      <Box className="container">
+                        <UploadButton
+                          options={options}
+                          onComplete={(files) =>
+                            setMenuImage(files.map((x) => x.fileUrl).join("\n"))
+                          }
+                        >
+                          {({ onClick }) => (
+                            <Button
+                              mt={7}
+                              colorScheme="green"
+                              onClick={onClick}
+                            >
+                              Image Upload..
+                            </Button>
+                          )}
+                        </UploadButton>
+                      </Box>
+                    </Box>
+
+                    <Box>
+                      <Button
+                        colorScheme="red"
+                        width={"100%"}
+                        mt={2}
+                        onClick={handleAddMenu}
+                      >
+                        Submit
+                      </Button>
+                    </Box>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+
+              {/* add dish model content start */}
+              <Center>
+                <Box>
+                  <Heading m={2}>Add Dishes</Heading>
+                  {/* <Text border={"1px solid gray" } bg={"green"} color={"white"}>{dishImage}</Text> */}
+                  {dishImage && (
+                    <Text
+                      border={"1px solid gray"}
+                      bg={"green"}
+                      color={"white"}
+                      // contentEditable={true}
+                    >
+                      {editingProduct.dishImage}
+                    </Text>
+                  )}
+                </Box>
+              </Center>
+
               <Box display={"flex"} gap={2}>
                 <FormControl>
                   <FormLabel>Title</FormLabel>
                   <Input
                     type="text"
                     name="title"
-                    onChange={handleChange}
-                    value={formData.title}
+                    onChange={handleInputChange}
+                    value={editingProduct?.title}
                     placeholder="product name"
                   />
                 </FormControl>
@@ -792,8 +970,8 @@ setDishImage("")
                   <Input
                     type="text"
                     name="image"
-                    onChange={handleChange}
-                    value={formData.image}
+                    onChange={handleInputChange}
+                    value={editingProduct?.image}
                     placeholder="image address"
                   />
                 </FormControl>
@@ -802,7 +980,7 @@ setDishImage("")
                   <UploadButton
                     options={options}
                     onComplete={(files) =>
-                      alert(files.map((x) => x.fileUrl).join("\n"))
+                      setDishImage(files.map((x) => x.fileUrl).join("\n"))
                     }
                   >
                     {({ onClick }) => (
@@ -818,9 +996,19 @@ setDishImage("")
                 <Input
                   type="number"
                   name="price"
-                  onChange={handleChangePrice}
-                  value={formData.price}
+                  onChange={handleChangePrice1}
+                  value={editingProduct?.price}
                   placeholder="Enter price"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Cut Price</FormLabel>
+                <Input
+                  type="number"
+                  name="cutprice"
+                  onChange={handleChangecutPrice1}
+                  value={editingProduct?.cutprice}
+                  placeholder="Enter cut price"
                 />
               </FormControl>
 
@@ -828,8 +1016,8 @@ setDishImage("")
                 <FormLabel>Description</FormLabel>
                 <Textarea
                   name="description"
-                  onChange={handleChange}
-                  value={formData.description}
+                  onChange={handleInputChange}
+                  value={editingProduct?.description}
                 />
               </FormControl>
 
@@ -838,21 +1026,83 @@ setDishImage("")
                 <Input
                   type="number"
                   name="quantity"
-                  onChange={handleChange}
-                  value={formData.quantity}
+                  onChange={handleInputChange}
+                  value={editingProduct?.quantity}
                   placeholder="product quantity"
                 />
               </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Discount</FormLabel>
+                <Input
+                  type="number"
+                  name="discount"
+                  onChange={handleInputChange}
+                  value={editingProduct?.discount}
+                  placeholder="product discount"
+                />
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>select menu</FormLabel>
+                <Select
+                  name="category"
+                  onChange={handleInputChange}
+                  placeholder="Select option"
+                >
+                  {menuItem &&
+                    menuItem.map((item) => (
+                      <option value={item.title}>{item.title}</option>
+                    ))}
+                </Select>
+              </FormControl>
+
+              <FormControl mt={4}>
+                <FormLabel>Sort filter</FormLabel>
+                <Select
+                  name="veg"
+                  onChange={handleInputChange}
+                  placeholder="Select option"
+                >
+                  <option value="veg">Veg</option>
+                  <option value="nonveg">Nonveg</option>
+                </Select>
+              </FormControl>
+              {/* Submit Button */}
+              {editLoading ? (
+                <Button
+                  isLoading
+                  mt={4}
+                  ml={2}
+                  spinner={<BeatLoader size={8} color="white" />}
+                  colorScheme="yellow"
+                  // onClick={handleSubmit}
+                >
+                update Dishes
+                </Button>
+              ) : (
+                <Button
+                  mt={4}
+                  ml={2}
+                  colorScheme="yellow"
+                  onClick={handleEditSubmit}
+                >
+                  Update Dishes
+                </Button>
+              )}
             </Box>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={handleSaveEdit}>
-              Update
+            {/* <Button colorScheme="teal" mr={3} onClick={handleSubmit}>
+              Add Gemstone
+            </Button> */}
+            <Button colorScheme="red" onClick={handleCloseAddModal}>
+              Cancel
             </Button>
-            <Button onClick={handleCloseModal}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
+
 
     </Box>
   );

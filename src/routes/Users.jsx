@@ -22,7 +22,7 @@ const Users = () => {
     setInitLoading(true);
     try {
       const response = await axios.get(
-        "https://light-foal-loafers.cyclic.app/user"
+        "https://do-eat-backen.onrender.com/user"
       );
       console.log(response);
       if (response.data.users) setUsers((response.data.users).reverse());

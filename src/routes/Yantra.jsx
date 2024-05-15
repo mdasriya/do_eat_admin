@@ -35,6 +35,7 @@ import {
 } from "@chakra-ui/react";
 // import data from "../Data";
 import { UploadButton } from "@bytescale/upload-widget-react";
+
 import { useState, useEffect } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -50,12 +51,14 @@ const Yantra = () => {
   const [render, setRender] = useState(false);
   const [product, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [editMenu, setEditMenu] = useState({})
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(product);
   const [menuItem, setMenuItem] = useState([]);
   const [dishImage, setDishImage] = useState("");
   const [menuImageset, setMenuImage] = useState("");
   const [editLoading, setEditLoading] = useState(false)
+  const [menuLoading, setMenuLoading] = useState(false)
   const [formData1, setFormData1] = useState({
     title: "",
     image: "",
@@ -76,7 +79,7 @@ const Yantra = () => {
     setInLoading(true);
     try {
       const response = await axios.get(
-        "https://light-foal-loafers.cyclic.app/yantra"
+        "https://do-eat-backen.onrender.com/yantra"
       );
       setInLoading(false);
       setProducts(response.data);
@@ -115,11 +118,16 @@ const Yantra = () => {
     setEditingProduct(product);
     setIsModalOpen(true);
   };
+  const handleEditMenu = (menuItem) => {
+    console.log(menuItem)
+    setEditMenu(menuItem);
+    setIsModalOpen(true);
+  };
 
   const handleEditSubmit =  () => {
     console.log(editingProduct);
 setEditLoading(true)
-axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduct._id}`, editingProduct)
+axios.patch(`https://do-eat-backen.onrender.com/yantra/update/${editingProduct._id}`, editingProduct)
 .then((res)=> {
   toast({
     title: res.data.msg,
@@ -141,10 +149,37 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
   setEditLoading(false)
 })
 
-    // https://light-foal-loafers.cyclic.app/yantra/update/663e2898c0a951a8f1e9c829
+   
+  };
+  const handleEditMenunew =  () => {
+    console.log(editingProduct);
+setMenuLoading(true)
+axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editingProduct._id}`, editingProduct)
+.then((res)=> {
+  toast({
+    title: res.data.msg,
+    status: 'success',
+    duration: 3000,
+    isClosable: true,
+  })
+  setMenuLoading(false)
+  fetchData();
+  handleCloseModal();
+}).catch((error)=> {
+  toast({
+    title: "unable to edit menu something wrong",
+    status: 'error',
+    duration: 3000,
+    isClosable: true,
+  })
+  console.log(error.message)
+  setMenuLoading(false)
+})
+
+    // https://do-eat-backen.onrender.com/yantra/update/663e2898c0a951a8f1e9c829
     // try {
     //   if (editingProduct._id) {
-    //     const res = await axios.patch(`https://light-foal-loafers.cyclic.app/yantr/update/${editingProduct._id}`, editingProduct
+    //     const res = await axios.patch(`https://do-eat-backen.onrender.com/yantr/update/${editingProduct._id}`, editingProduct
     //     );
     //     console.log("edit res", res.data)
     //     fetchData();
@@ -165,7 +200,7 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `https://light-foal-loafers.cyclic.app/yantra/delete/${id}`
+        `https://do-eat-backen.onrender.com/yantra/delete/${id}`
       );
 
       if (res.data.state) {
@@ -192,7 +227,7 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
   const handleDeletemenu = async (id) => {
     try {
       const res = await axios.delete(
-        `https://light-foal-loafers.cyclic.app/menu/delete/${id}`
+        `https://do-eat-backen.onrender.com/menu/delete/${id}`
       );
 
       if (res.data.state) {
@@ -252,6 +287,11 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
     // const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
     setFormData1((prevData) => ({ ...prevData, [name]: value }));
   };
+  const handleChangeMenu = (event) => {
+    const { name, value } = event.target;
+    // const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
+    setEditMenu((prevData) => ({ ...prevData, [name]: value }));
+  };
 
 
   const handleChangePrice = (event) => {
@@ -292,7 +332,7 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
     setAddLoading(true);
     try {
       const res = await axios.post(
-        "https://light-foal-loafers.cyclic.app/yantra/create",
+        "https://do-eat-backen.onrender.com/yantra/create",
         formData
       );
 
@@ -337,7 +377,7 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
   const handleAddMenu = () => {
     console.log("data1", formData1);
     axios
-      .post("https://light-foal-loafers.cyclic.app/menu/create", formData1)
+      .post("https://do-eat-backen.onrender.com/menu/create", formData1)
       .then((res) => {
         console.log(res.data);
         toast({
@@ -367,7 +407,7 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
 
   const fetchMenu = () => {
     axios
-      .get("https://light-foal-loafers.cyclic.app/menu")
+      .get("https://do-eat-backen.onrender.com/menu")
       .then((res) => {
         console.log("menu", res.data);
         setMenuItem(res.data);
@@ -822,12 +862,12 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
                         />
                       </Box>
                       <HStack justifyContent="flex-end">
-                        {/* <Button
+                        <Button
                     colorScheme="green"
-                    onClick={() => handleEditClick(gemstone)}
+                    onClick={() => handleEditMenu(menu)}
                   >
                     Edit
-                  </Button> */}
+                  </Button>
                         <Button
                           colorScheme={textColor === "dark" ? "red" : "red"}
                           onClick={() => handleDeletemenu(menu._id)}
@@ -886,8 +926,8 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
                         <Input
                           type="text"
                           name="title"
-                          onChange={handleChange1}
-                          value={formData1.title.toLowerCase()}
+                          onChange={handleChangeMenu}
+                          value={editMenu?.title?.toLowerCase()}
                           placeholder="product name"
                         />
                       </FormControl>
@@ -896,8 +936,8 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
                         <Input
                           type="text"
                           name="image"
-                          onChange={handleChange1}
-                          value={formData1.image}
+                          onChange={handleChangeMenu}
+                          value={editMenu?.image}
                           placeholder="image address"
                         />
                       </FormControl>
@@ -927,7 +967,7 @@ axios.patch(`https://light-foal-loafers.cyclic.app/yantra/update/${editingProduc
                         colorScheme="red"
                         width={"100%"}
                         mt={2}
-                        onClick={handleAddMenu}
+                        onClick={handleEditMenunew}
                       >
                         Submit
                       </Button>

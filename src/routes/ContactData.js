@@ -26,7 +26,7 @@ const ContactData = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://light-foal-loafers.cyclic.app/contact"
+        "https://do-eat-backen.onrender.com/contact"
       );
       // console.log(data);
 

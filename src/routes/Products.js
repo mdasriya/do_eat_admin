@@ -75,7 +75,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     setIsLoading(true)
     try {
       const response = await axios.get(
-        "https://light-foal-loafers.cyclic.app/products"
+        "https://do-eat-backen.onrender.com/products"
       );
  if(response.data){
   setIsLoading(false)
@@ -115,7 +115,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     try {
       if (editingProduct && editingProduct._id) {
         const res = await axios.put(
-          `https://light-foal-loafers.cyclic.app/products/${editingProduct._id}`,
+          `https://do-eat-backen.onrender.com/products/${editingProduct._id}`,
           editingProduct
         );
         fetchData();
@@ -135,7 +135,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`https://light-foal-loafers.cyclic.app/products/delete/${id}`);
+      const res = await axios.delete(`https://do-eat-backen.onrender.com/products/delete/${id}`);
 
       if (res.data.state) {
         renderComp();
@@ -221,7 +221,7 @@ const handleSubmit = async () => {
 
   try {
     // Log or send the form data
-    const res = await axios.post("https://light-foal-loafers.cyclic.app/products/create", formData);
+    const res = await axios.post("https://do-eat-backen.onrender.com/products/create", formData);
 
     if (res.data.state) {
       toast({

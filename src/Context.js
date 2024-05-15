@@ -23,7 +23,7 @@ useEffect(()=> {
     try {
       // Fetch order data
       const ordersResponse = await axios.get(
-        "https://light-foal-loafers.cyclic.app/order/all"
+        "https://do-eat-backen.onrender.com/order/all"
       );
 
       // Update total orders
@@ -40,7 +40,7 @@ useEffect(()=> {
 
       // Fetch user data
       const usersResponse = await axios.get(
-        "https://light-foal-loafers.cyclic.app/yantra"
+        "https://do-eat-backen.onrender.com/yantra"
       );
 if(usersResponse.data){
  
@@ -59,7 +59,7 @@ const yantaFetch = async () => {
   
   try {
     const response = await axios.get(
-      "https://light-foal-loafers.cyclic.app/products"
+      "https://do-eat-backen.onrender.com/products"
     );
 if(response.data){
    setTotalGemstone(response.data.length); 
@@ -72,7 +72,7 @@ const WorkShipFetch = async () => {
   
   try {
     const response = await axios.get(
-      "https://light-foal-loafers.cyclic.app/workShip"
+      "https://do-eat-backen.onrender.com/workShip"
     );
 if(response.data){
 
@@ -86,7 +86,7 @@ const handleAryuvedic = async () => {
   
   try {
     const response = await axios.get(
-      "https://light-foal-loafers.cyclic.app/medecine"
+      "https://do-eat-backen.onrender.com/medecine"
     );
 if(response.data){
 
@@ -107,7 +107,7 @@ if(response.data){
       try {
         // Fetch order data
         const ordersResponse = await axios.get(
-          "https://light-foal-loafers.cyclic.app/order/all"
+          "https://do-eat-backen.onrender.com/order/all"
         );
 console.log("orderData",ordersResponse.data)
         // Update total orders
@@ -124,7 +124,7 @@ console.log("orderData",ordersResponse.data)
 
         // Fetch user data
         const usersResponse = await axios.get(
-          "https://light-foal-loafers.cyclic.app/user"
+          "https://do-eat-backen.onrender.com/user"
         );
   if(usersResponse.data.users.length>0){
     setTotalUsers(usersResponse.data.users.length)

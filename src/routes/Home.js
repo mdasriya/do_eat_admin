@@ -33,7 +33,7 @@ function Home() {
 
 const handleResStatus = (props) => {
 console.log(props)
-  axios.patch(`https://light-foal-loafers.cyclic.app/resturant/update/${id}`, {resturant:props} )
+  axios.patch(`https://do-eat-backen.onrender.com/resturant/update/${id}`, {resturant:props} )
   .then((res)=> {
     // console.log(res.data)
     render()
@@ -45,7 +45,7 @@ console.log(props)
 }
 
 const fetch = () => {
-  axios.get("https://light-foal-loafers.cyclic.app/resturant")
+  axios.get("https://do-eat-backen.onrender.com/resturant")
   .then((res)=> {
   // console.log(res.data)
   setStatus(res.data[0].resturant)

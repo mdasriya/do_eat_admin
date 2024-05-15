@@ -42,7 +42,7 @@ const renderComp = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://light-foal-loafers.cyclic.app/order/all"
+        "https://do-eat-backen.onrender.com/order/all"
       );
       setOdata(response.data.reverse());
       console.log("res",response.data)
@@ -60,7 +60,7 @@ const renderComp = () => {
   const fetchAdd = async () => {
     try {
       const response = await axios.get(
-        "https://light-foal-loafers.cyclic.app/address"
+        "https://do-eat-backen.onrender.com/address"
       );
       setAdd(response.data);
     } catch (error) {
@@ -89,7 +89,7 @@ const renderComp = () => {
   const handleEditOrderStatus = async(id, status) => {
     setLoadingStatus(true)
     if(status=== "dispatch"){
-      const response =  await axios.patch(`https://light-foal-loafers.cyclic.app/order/update/${id}`, {status:"dispatch"})
+      const response =  await axios.patch(`https://do-eat-backen.onrender.com/order/update/${id}`, {status:"dispatch"})
       try {
         if(response.data.state){
           toast({
@@ -117,7 +117,7 @@ const renderComp = () => {
 
     }else{
       try {
-        const response =  await axios.patch(`https://light-foal-loafers.cyclic.app/order/update/${id}`, {status:"delivered"})
+        const response =  await axios.patch(`https://do-eat-backen.onrender.com/order/update/${id}`, {status:"delivered"})
         if(response.data.state){
           toast({
             title: response.data.msg,

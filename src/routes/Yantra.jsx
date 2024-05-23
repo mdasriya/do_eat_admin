@@ -66,7 +66,7 @@ const Yantra = () => {
 
   const textColor = localStorage.getItem("chakra-ui-color-mode");
   const options = {
-    apiKey: "public_W142ibG53EuiVnmepYM6iYmqTRg5",
+    apiKey: "public_W142icm41VA12cMEiAoobEZeK85G",
     maxFileCount: 1,
     showFinishButton: true,
   };
@@ -96,6 +96,18 @@ const Yantra = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setIsAddModalOpen(false);
+    setEditingProduct({
+      title: "",
+      description: "",
+      image: "",
+      quantity: 0,
+      price: "",
+      veg: "",
+      category: "",
+    });
+    setDishImage("");
+    setMenuImage("");
   };
 
   const handleCloseAddModal = () => {
@@ -152,9 +164,9 @@ axios.patch(`https://do-eat-backen.onrender.com/yantra/update/${editingProduct._
    
   };
   const handleEditMenunew =  () => {
-    console.log(editingProduct);
+    console.log("edit",editMenu);
 setMenuLoading(true)
-axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editingProduct._id}`, editingProduct)
+axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, editMenu)
 .then((res)=> {
   toast({
     title: res.data.msg,
@@ -163,7 +175,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editingProduct._id
     isClosable: true,
   })
   setMenuLoading(false)
-  fetchData();
+  renderComp();
   handleCloseModal();
 }).catch((error)=> {
   toast({
@@ -176,18 +188,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editingProduct._id
   setMenuLoading(false)
 })
 
-    // https://do-eat-backen.onrender.com/yantra/update/663e2898c0a951a8f1e9c829
-    // try {
-    //   if (editingProduct._id) {
-    //     const res = await axios.patch(`https://do-eat-backen.onrender.com/yantr/update/${editingProduct._id}`, editingProduct
-    //     );
-    //     console.log("edit res", res.data)
-    //     fetchData();
-    //     handleCloseModal();
-    //   }
-    // } catch (error) {
-    //   console.error("Error updating product:", error);
-    // }
+  
   };
 
   useEffect(() => {
@@ -963,14 +964,22 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editingProduct._id
                     </Box>
 
                     <Box>
-                      <Button
+               {menuLoading ? <Button
+               isLoading
+                        colorScheme="red"
+                        width={"100%"}
+                        mt={2}
+                        // onClick={handleEditMenunew}
+                      >
+                        Submit
+                      </Button> : <Button
                         colorScheme="red"
                         width={"100%"}
                         mt={2}
                         onClick={handleEditMenunew}
                       >
                         Submit
-                      </Button>
+                      </Button>}       
                     </Box>
                   </AccordionPanel>
                 </AccordionItem>

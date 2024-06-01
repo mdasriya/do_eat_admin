@@ -556,7 +556,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
                       color={"white"}
                       // contentEditable={true}
                     >
-                      {dishImage}
+                      {dishImage? dishImage: "unable to read"}
                     </Text>
                   )}
                 </Box>

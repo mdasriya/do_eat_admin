@@ -68,7 +68,7 @@ const Yantra = () => {
   const options = {
     apiKey: "public_W142idf9qnCAMufa7K7frtzrrEx3",
     maxFileCount: 1,
-    showFinishButton: true,
+    showFinishButton: false,
   };
 
   const renderComp = () => {
@@ -556,7 +556,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
                       color={"white"}
                       // contentEditable={true}
                     >
-                      {dishImage? dishImage: "unable to read"}
+                      {dishImage? dishImage: "unable to read image"}
                     </Text>
                   )}
                 </Box>
@@ -997,7 +997,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
                       color={"white"}
                       // contentEditable={true}
                     >
-                      {editingProduct.dishImage}
+                      {editingProduct?.dishImage}
                     </Text>
                   )}
                 </Box>

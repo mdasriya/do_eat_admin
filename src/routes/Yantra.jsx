@@ -35,7 +35,11 @@ import {
 } from "@chakra-ui/react";
 // import data from "../Data";
 import { UploadButton } from "@bytescale/upload-widget-react";
-
+import React from 'react'
+import { Cloudinary } from '@cloudinary/url-gen';
+import { auto } from '@cloudinary/url-gen/actions/resize';
+import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
+import { AdvancedImage } from '@cloudinary/react';
 import { useState, useEffect } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -43,6 +47,7 @@ import axios from "axios";
 
 import { useToast } from "@chakra-ui/react";
 const Yantra = () => {
+  const cld = new Cloudinary({cloud: {cloudName: 'dhjybl67e'}});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [addLoading, setAddLoading] = useState(false);
@@ -418,11 +423,20 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
       });
   };
 
+
+ // Use this sample image or upload your own via the Media Explorer
+ const img = cld.image('cld-sample-5')
+ .format('auto') // Optimize delivery by resizing and applying auto-format and auto-quality
+ .quality('auto')
+ .resize(auto().gravity(autoGravity()).width(500).height(500)); // Transform the image: auto-crop to square aspect_ratio
+
+
+
   useEffect(() => {
     fetchData();
     fetchMenu();
   }, [render]);
-
+console.log("dishImage",dishImage)
   return (
     <Box>
       <chakra.h1 textAlign="center" fontSize="2xl" fontWeight="bold" mb={4}>
@@ -527,6 +541,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
                             </Button>
                           )}
                         </UploadButton>
+                       
                       </Box>
                     </Box>
 
@@ -684,7 +699,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
                   ml={2}
                   spinner={<BeatLoader size={8} color="white" />}
                   colorScheme="yellow"
-                  onClick={handleSubmit}
+                  // onClick={handleSubmit}
                 >
                   ADD Dishes
                 </Button>
@@ -988,7 +1003,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
               {/* add dish model content start */}
               <Center>
                 <Box>
-                  <Heading m={2}>Add Dishes</Heading>
+                  <Heading m={2}>Update Dishes</Heading>
                   {/* <Text border={"1px solid gray" } bg={"green"} color={"white"}>{dishImage}</Text> */}
                   {dishImage && (
                     <Text
@@ -997,7 +1012,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
                       color={"white"}
                       // contentEditable={true}
                     >
-                      {editingProduct?.dishImage}
+                      {dishImage}
                     </Text>
                   )}
                 </Box>

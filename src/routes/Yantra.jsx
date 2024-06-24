@@ -71,7 +71,7 @@ const Yantra = () => {
 
   const textColor = localStorage.getItem("chakra-ui-color-mode");
   const options = {
-    apiKey: "public_12a1yzpFGGi1amtfi116NTtRUco8",
+    apiKey: "public_12a1z1eEt6W3t1TWtQsu6BtEmVdH",
     maxFileCount: 1,
     showFinishButton: false,
   };
@@ -192,8 +192,6 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
   console.log(error.message)
   setMenuLoading(false)
 })
-
-  
   };
 
   useEffect(() => {
@@ -282,11 +280,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
         return {...prev, [name]:value}
       })
   }
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  //   // const parsedValue = name === "quantity" ? parseInt(value, 10) : value;
-  //   setFormData((prevData) => ({ ...prevData, [name]: value }));
-  // };
+ 
 
   const handleChange1 = (event) => {
     const { name, value } = event.target;

@@ -19,6 +19,8 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import axios from "axios";
 function Home() {
+  const [resLoading, setResLoading] = useState(false)
+  const [editLoading, setEditLoading] = useState(false)
   const [status, setStatus] = useState("")
   const [update, setUpdate] = useState("")
   const [id, setId] = useState("")
@@ -32,27 +34,32 @@ function Home() {
 
 
 const handleResStatus = (props) => {
+ setEditLoading(true)
 console.log(props)
   axios.patch(`https://do-eat-backen.onrender.com/resturant/update/${id}`, {resturant:props} )
   .then((res)=> {
     // console.log(res.data)
+    setEditLoading(false)
     render()
   }).catch((error)=> {
     console.log(error.message)
+   setEditLoading(false)
   })
 
 
 }
 
 const fetch = () => {
+  setResLoading(true)
   axios.get("https://do-eat-backen.onrender.com/resturant")
   .then((res)=> {
   // console.log(res.data)
   setStatus(res.data[0].resturant)
   setId(res.data[0]._id)
-  
+  setResLoading(false)
   }).catch((error)=> {
-    console.log(error.message)
+    console.log(error.message) 
+     setResLoading(false)
   })
 }
 
@@ -62,7 +69,7 @@ useEffect(()=>{
 },[update])
 
 // console.log("status", status)
-// console.log("id", id)
+console.log("id", resLoading)
 
   let allOders = totalgamestone + totalYantra + totalWorkShip + totalAryuvedic;
   return (
@@ -78,7 +85,8 @@ useEffect(()=>{
         >
           Do Eat Admin DashBoard
         </Text>
-    {status ?  <Button colorScheme="green" ml={"500px"} onClick={()=>handleResStatus(false)}> Resturant Open </Button> :   <Button colorScheme="red" ml={"500px"} onClick={()=>handleResStatus(true)}> Resturant Close </Button>}   
+        {resLoading ? <Button colorScheme="teal"  > Please wait...</Button> : status ? <Button colorScheme="green" disabled={editLoading===true} onClick={()=>handleResStatus(false)}> Resturant Open </Button> : <Button colorScheme="red" disabled={editLoading===true}  onClick={()=>handleResStatus(true)}> Resturant Close </Button>}
+    {/* {status ?  <Button colorScheme="green"  onClick={()=>handleResStatus(false)}> Resturant Open </Button> :   <Button colorScheme="red"  onClick={()=>handleResStatus(true)}> Resturant Close </Button>}    */}
       </Center>
       <Grid
         templateColumns="repeat(2, 1fr)"

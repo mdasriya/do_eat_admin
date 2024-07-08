@@ -44,7 +44,7 @@ const Orders = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/order/all"
+        "https://doeatsbackend.vercel.app/order/all"
       );
       setOdata(response.data.reverse());
       console.log("res", response.data);
@@ -62,7 +62,7 @@ const Orders = () => {
   const fetchAdd = async () => {
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/address"
+        "https://doeatsbackend.vercel.app/address"
       );
       setAdd(response.data);
     } catch (error) {
@@ -89,7 +89,7 @@ const Orders = () => {
     setLoadingStatus(true);
     if (status === "dispatch") {
       const response = await axios.patch(
-        `https://do-eat-backen.onrender.com/order/update/${id}`,
+        `https://doeatsbackend.vercel.app/order/update/${id}`,
         { status: "dispatch" }
       );
       try {
@@ -118,7 +118,7 @@ const Orders = () => {
     } else {
       try {
         const response = await axios.patch(
-          `https://do-eat-backen.onrender.com/order/update/${id}`,
+          `https://doeatsbackend.vercel.app/order/update/${id}`,
           { status: "delivered" }
         );
         if (response.data.state) {

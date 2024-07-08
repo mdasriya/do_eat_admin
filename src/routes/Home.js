@@ -36,7 +36,7 @@ function Home() {
 const handleResStatus = (props) => {
  setEditLoading(true)
 console.log(props)
-  axios.patch(`https://do-eat-backen.onrender.com/resturant/update/${id}`, {resturant:props} )
+  axios.patch(`https://doeatsbackend.vercel.app/resturant/update/${id}`, {resturant:props} )
   .then((res)=> {
     // console.log(res.data)
     setEditLoading(false)
@@ -51,7 +51,7 @@ console.log(props)
 
 const fetch = () => {
   setResLoading(true)
-  axios.get("https://do-eat-backen.onrender.com/resturant")
+  axios.get("https://doeatsbackend.vercel.app/resturant")
   .then((res)=> {
   // console.log(res.data)
   setStatus(res.data[0].resturant)

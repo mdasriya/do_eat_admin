@@ -26,7 +26,7 @@ const ContactData = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/contact"
+        "https://doeatsbackend.vercel.app/contact"
       );
       // console.log(data);
 

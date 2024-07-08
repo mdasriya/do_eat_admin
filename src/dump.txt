@@ -13,7 +13,7 @@ export const RevenueProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const ordersResponse = await axios.get(
-          "https://do-eat-backen.onrender.com/order/all"
+          "https://doeatsbackend.vercel.app/order/all"
         );
 
         // Update total orders

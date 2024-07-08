@@ -22,7 +22,7 @@ const Users = () => {
     setInitLoading(true);
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/user"
+        "https://doeatsbackend.vercel.app/user"
       );
       console.log(response);
       if (response.data.users) setUsers((response.data.users).reverse());

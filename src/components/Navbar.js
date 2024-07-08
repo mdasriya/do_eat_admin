@@ -48,7 +48,6 @@ setNavWidth((prev) => !prev)
       isClosable: true,
     });
     localStorage.clear();
-
     navigate("/login");
   };
 
@@ -115,21 +114,7 @@ setNavWidth((prev) => !prev)
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4} cursor={"pointer"} marginLeft={10}>
-                        {/* <Box display={"flex"}>
-                          <BsArrowRightShort
-                            size={20}
-                            style={{ marginTop: "5px" }}
-                          />
-                          <Text
-                            color={"gray"}
-                            fontSize={18}
-                            onClick={() => navigate("/products")}
-                            _hover={{ color: "black" }}
-                          >
-                            Gemstone({totalgamestone})
-                          </Text>
-                        </Box> */}
-
+                        
                         <Box display={"flex"}>
                           <BsArrowRightShort
                             size={20}
@@ -145,34 +130,6 @@ setNavWidth((prev) => !prev)
                           </Text>
                         </Box>
 
-                        {/* <Box display={"flex"}>
-                          <BsArrowRightShort
-                            size={20}
-                            style={{ marginTop: "5px" }}
-                          />
-                          <Text
-                            color={"gray"}
-                            _hover={{ color: "black" }}
-                            fontSize={18}
-                            onClick={() => navigate("/workShip")}
-                          >
-                            WorkShip({totalWorkShip})
-                          </Text>
-                        </Box> */}
-                        {/* <Box display={"flex"}>
-                          <BsArrowRightShort
-                            size={20}
-                            style={{ marginTop: "5px" }}
-                          />
-                          <Text
-                            color={"gray"}
-                            _hover={{ color: "black" }}
-                            fontSize={18}
-                            onClick={() => navigate("/aryuvedic")}
-                          >
-                            Aryuvedic({totalAryuvedic})
-                          </Text>
-                        </Box> */}
                       </AccordionPanel>
                     </AccordionItem>
                   </Accordion>

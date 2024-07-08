@@ -27,7 +27,7 @@ const Kundali = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/kundali"
+        "https://doeatsbackend.vercel.app/kundali"
       );
       // console.log(data);
       const newData = response.data;

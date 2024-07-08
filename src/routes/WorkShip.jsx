@@ -63,7 +63,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     setAddLoading(true)
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/workShip"
+        "https://doeatsbackend.vercel.app/workShip"
       );
   setAddLoading(false)
       setProducts(response.data);
@@ -98,7 +98,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
     try {
       if (editingProduct && editingProduct._id) {
         const res = await axios.put(
-          `https://do-eat-backen.onrender.com/workShip/${editingProduct._id}`,
+          `https://doeatsbackend.vercel.app/workShip/${editingProduct._id}`,
           editingProduct
           );
         fetchData();
@@ -118,7 +118,7 @@ const textColor = localStorage.getItem("chakra-ui-color-mode")
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`https://do-eat-backen.onrender.com/workShip/delete/${id}`);
+      const res = await axios.delete(`https://doeatsbackend.vercel.app/workShip/delete/${id}`);
 
       if (res.data.state) {
         renderComp();
@@ -175,7 +175,7 @@ const handleSubmit = async () => {
   console.log(formData)
   try {
   
-     const res = await axios.post("https://do-eat-backen.onrender.com/workShip/create", formData);
+     const res = await axios.post("https://doeatsbackend.vercel.app/workShip/create", formData);
 
      if (res.data.state) {
       toast({

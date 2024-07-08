@@ -84,7 +84,7 @@ const Yantra = () => {
     setInLoading(true);
     try {
       const response = await axios.get(
-        "https://do-eat-backen.onrender.com/yantra"
+        "https://doeatsbackend.vercel.app/yantra"
       );
       setInLoading(false);
       setProducts(response.data);
@@ -144,7 +144,7 @@ const Yantra = () => {
   const handleEditSubmit =  () => {
     console.log(editingProduct);
 setEditLoading(true)
-axios.patch(`https://do-eat-backen.onrender.com/yantra/update/${editingProduct._id}`, editingProduct)
+axios.patch(`https://doeatsbackend.vercel.app/yantra/update/${editingProduct._id}`, editingProduct)
 .then((res)=> {
   toast({
     title: res.data.msg,
@@ -171,7 +171,7 @@ axios.patch(`https://do-eat-backen.onrender.com/yantra/update/${editingProduct._
   const handleEditMenunew =  () => {
     console.log("edit",editMenu);
 setMenuLoading(true)
-axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, editMenu)
+axios.patch(`https://doeatsbackend.vercel.app/menu/update/${editMenu._id}`, editMenu)
 .then((res)=> {
   toast({
     title: res.data.msg,
@@ -204,7 +204,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `https://do-eat-backen.onrender.com/yantra/delete/${id}`
+        `https://doeatsbackend.vercel.app/yantra/delete/${id}`
       );
 
       if (res.data.state) {
@@ -231,7 +231,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
   const handleDeletemenu = async (id) => {
     try {
       const res = await axios.delete(
-        `https://do-eat-backen.onrender.com/menu/delete/${id}`
+        `https://doeatsbackend.vercel.app/menu/delete/${id}`
       );
 
       if (res.data.state) {
@@ -332,7 +332,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
     setAddLoading(true);
     try {
       const res = await axios.post(
-        "https://do-eat-backen.onrender.com/yantra/create",
+        "https://doeatsbackend.vercel.app/yantra/create",
         formData
       );
 
@@ -377,7 +377,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
   const handleAddMenu = () => {
     console.log("data1", formData1);
     axios
-      .post("https://do-eat-backen.onrender.com/menu/create", formData1)
+      .post("https://doeatsbackend.vercel.app/menu/create", formData1)
       .then((res) => {
         console.log(res.data);
         toast({
@@ -407,7 +407,7 @@ axios.patch(`https://do-eat-backen.onrender.com/menu/update/${editMenu._id}`, ed
 
   const fetchMenu = () => {
     axios
-      .get("https://do-eat-backen.onrender.com/menu")
+      .get("https://doeatsbackend.vercel.app/menu")
       .then((res) => {
         console.log("menu", res.data);
         setMenuItem(res.data);
